@@ -1,0 +1,23 @@
+---
+driver:
+  name: docker
+docker:
+  containers:
+    - name: ansible-role-nodejs-1404
+      image: ubuntu
+      image_version: 14.04
+      volume_mounts:
+        - ${MOLECULE_APTPROXY_PATH}:/etc/apt/apt.conf.d/00aptproxy
+
+    - name: ansible-role-nodejs-1604
+      image: ubuntu
+      image_version: 16.04
+      volume_mounts:
+        - ${MOLECULE_APTPROXY_PATH}:/etc/apt/apt.conf.d/00aptproxy
+
+ansible:
+  playbook: tests/playbook.yml
+  group_vars:
+    all:
+      nodejs_npm_global_packages:
+        - name: less
