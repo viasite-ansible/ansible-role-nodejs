@@ -1,0 +1,28 @@
+---
+driver:
+  name: docker
+platforms:
+  - name: ansible-role-nodejs-1404
+    image: ubuntu
+    image_version: 14.04
+    volume_mounts:
+      - ${MOLECULE_APTPROXY_PATH}:/etc/apt/apt.conf.d/00aptproxy
+
+  - name: ansible-role-nodejs-1604
+    image: ubuntu
+    image_version: 16.04
+    volume_mounts:
+      - ${MOLECULE_APTPROXY_PATH}:/etc/apt/apt.conf.d/00aptproxy
+
+lint:
+  name: yamllint
+  enabled: False
+
+provisioner:
+  name: ansible
+  inventory:
+    group_vars:
+      all:
+        nodejs_install_npm_user: root
+        nodejs_npm_global_packages:
+          - name: less
